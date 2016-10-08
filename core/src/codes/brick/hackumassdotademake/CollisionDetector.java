@@ -41,6 +41,17 @@ public class CollisionDetector {
 				p2.setPosition(p2.getX() - Puck.COLLISION_REBOUND, p2.getY());
 			}
 		}
+		validatePosition(p1);
+		validatePosition(p2);
+	}
+	
+	public void validatePosition(Puck player) {
+	  if (player.getX() < 0) {
+	    player.setX(0);
+	  }
+	  else if (player.getX() > MyGdxGame.VIEWPORT_WIDTH - player.getWidth()) {
+	    player.setX(MyGdxGame.VIEWPORT_WIDTH - player.getWidth());
+	  }
 	}
 
 }

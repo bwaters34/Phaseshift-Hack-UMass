@@ -26,9 +26,9 @@ public class MyGdxGame extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		viewport = new FitViewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
 		player1 = new Puck();
-		player1.setPosition(100, 100);
+		player1.setPosition(0, 0);
 		player2 = new Puck();
-		player2.setPosition(0, 0);
+		player2.setPosition(VIEWPORT_WIDTH - player2.getWidth(), 0);
 		iw = new InputWatcher(player1, player2);
 		Gdx.input.setInputProcessor(iw);
 		collisions = new CollisionDetector(player1, player2);
