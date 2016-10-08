@@ -27,7 +27,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		player1 = new Puck();
 		player1.setPosition(0, 0);
 		player2 = new Puck();
-		player2.setPosition(300, 100);
+		player2.setPosition(300, 0);
 		player2.flip(true, false);
 		iw = new InputWatcher(player1, player2);
 		Gdx.input.setInputProcessor(iw);
