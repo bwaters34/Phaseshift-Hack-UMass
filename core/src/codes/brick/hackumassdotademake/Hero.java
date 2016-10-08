@@ -68,6 +68,8 @@ public abstract class Hero extends Sprite {
     }
   }
 
+  public abstract void useFirstSpell();
+
   public void update() {
     System.out.println(direction);
     move();

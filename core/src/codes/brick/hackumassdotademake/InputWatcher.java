@@ -22,12 +22,18 @@ public class InputWatcher extends InputAdapter {
       player1.leftSignal();
     } else if (keycode == Keys.D) {
       player1.rightSignal();
-    } else if (keycode == Keys.UP) {
+    } else if (keycode == Keys.R){
+      player1.useFirstSpell();
+    }
+    //BEGIN PLAYER 2
+     else if (keycode == Keys.UP) {
       player2.upSignal();
     } else if (keycode == Keys.LEFT) {
       player2.leftSignal();
     } else if (keycode == Keys.RIGHT) {
       player2.rightSignal();
+    } else if (keycode == Keys.SPACE) {
+      player2.useFirstSpell();
     }
     return true;
   }
