@@ -22,9 +22,12 @@ public class Puck extends Hero {
   @Override
   public void draw (Batch batch) {
     super.draw(batch);
+  }
+  
+  public void drawOrb (Batch batch) {
     if(orb!= null){
       orb.draw(batch);
-    }
+    }    
   }
 
   @Override

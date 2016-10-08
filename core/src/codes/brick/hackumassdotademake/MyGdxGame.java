@@ -41,6 +41,8 @@ public class MyGdxGame extends ApplicationAdapter {
 		// draw bg
 		player1.draw(batch);
 		player2.draw(batch);
+    player1.drawOrb(batch);
+    player2.drawOrb(batch);
 		batch.end();
 		player1.update();
 		player2.update();
