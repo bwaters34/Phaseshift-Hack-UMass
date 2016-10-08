@@ -16,47 +16,70 @@ public class MyGdxGame extends ApplicationAdapter {
   public static final int VIEWPORT_WIDTH = 1024;
   public static final int VIEWPORT_HEIGHT = 256;
 
+  private float player1XPosition = 0;
+  private float player1YPosition = 0;
+
+  private float player2XPosition;
+  private float player2YPosition = 0;
+
   private InputWatcher iw;
 
   private Viewport viewport;
 
 
-	@Override
-	public void create () {
-		batch = new SpriteBatch();
-		viewport = new FitViewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
-		player1 = new Puck();
-		player1.setPosition(0, 0);
-		player2 = new Puck();
-		player2.flip(true, false);
-		player2.setPosition(VIEWPORT_WIDTH - player2.getWidth(), 0);
-		iw = new InputWatcher(player1, player2);
-		Gdx.input.setInputProcessor(iw);
-		collisions = new CollisionDetector(player1, player2);
-	}
+  @Override
+  public void create () {
+    batch = new SpriteBatch();
+    viewport = new FitViewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
+    player1 = new Puck();
+    player1.setPosition(player1XPosition, player1YPosition);
+    player2 = new Puck();
+    player2.flip(true, false);
+    player2XPosition = VIEWPORT_WIDTH - player2.getWidth();
+    player2.setPosition(player2XPosition, player2YPosition);
+    iw = new InputWatcher(player1, player2);
+    Gdx.input.setInputProcessor(iw);
+    collisions = new CollisionDetector(player1, player2);
+  }
 
-	@Override
-	public void render () {
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		batch.begin();
-		// draw bg
-		player1.draw(batch);
-		player2.draw(batch);
+  @Override
+  public void render () {
+    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+    batch.begin();
+    // draw bg
+    player1.draw(batch);
+    player2.draw(batch);
     player1.drawOrb(batch);
     player2.drawOrb(batch);
-		batch.end();
-		player1.update();
-		player2.update();
-		collisions.detectCollisions();
-	}
+    batch.end();
+    player1.update();
+    player2.update();
+    collisions.detectCollisions();
+    if(player1.isDead()){
+      player1.increaseCurrentLives(-1);
+      if(player2.isDead()){
+        player2.increaseCurrentLives(-1);
+      }
+      player1.restoreHealth();
+      player2.restoreHealth();
+      player1.setPosition(player1XPosition, player1YPosition);
+      player2.setPosition(player2XPosition, player2YPosition);
+    } else if(player2.isDead()){
+      player2.increaseCurrentLives(-1);
+      player1.restoreHealth();
+      player2.restoreHealth();
+      player1.setPosition(player1XPosition, player1YPosition);
+      player2.setPosition(player2XPosition, player2YPosition);
+    }
+  }
 
   @Override
   public void resize(int width, int height) {
     viewport.update(width, height);
   }
 
-	@Override
-	public void dispose () {
-		batch.dispose();
-	}
+  @Override
+  public void dispose () {
+    batch.dispose();
+  }
 }

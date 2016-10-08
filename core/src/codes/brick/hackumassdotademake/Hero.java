@@ -14,6 +14,9 @@ public abstract class Hero extends Sprite {
   private final int JUMP_SPEED = 30;
   private final int JUMP_CHANGE = 2;
   private int currentJumpSpeed = JUMP_SPEED;
+  private boolean isDead = false;
+  private final int MAX_LIVES = 3;
+  private int currentLives = MAX_LIVES;
 
   private enum State {
     STANDING, JUMPING, FALLING
@@ -41,9 +44,6 @@ public abstract class Hero extends Sprite {
 
   public void damage(int damage) {
     health -= damage;
-    if (health < 0) {
-      die();
-    }
   }
 
   public void upSignal(){
@@ -62,9 +62,14 @@ public abstract class Hero extends Sprite {
     direction = Direction.LEFT;
   }
 
-  private void die() {
-    // stub
+  public boolean isDead(){
+    return health <= 0;
   }
+
+  public void increaseCurrentLives(int add){
+    currentLives += add;
+  }
+
 
   public void move() {
     if (direction == null) {
@@ -78,7 +83,6 @@ public abstract class Hero extends Sprite {
     case RIGHT:
       this.setPosition(getX() + 10, getY());
       this.setFlip(false, false);
-      break;
     default:
       return;
     }
