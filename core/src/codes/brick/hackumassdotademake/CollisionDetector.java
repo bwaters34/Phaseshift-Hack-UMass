@@ -1,0 +1,39 @@
+package codes.brick.hackumassdotademake;
+
+import com.badlogic.gdx.math.Rectangle;
+
+public class CollisionDetector {
+	private Puck p1, p2;
+
+	public CollisionDetector(Puck player1, Puck player2) {
+		p1 = player1;
+		p2 = player2;
+	}
+	
+	public void detectCollisions() {
+		Rectangle p1Rect = p1.getBoundingRectangle();
+		Rectangle p2Rect = p2.getBoundingRectangle();
+		Orb p1Orb = p1.getOrb();
+		Orb p2Orb = p2.getOrb();
+		if (p1Orb != null && p1Orb.harmful) {
+			Rectangle orb1Rect = p1Orb.getBoundingRectangle();
+			if (p2Rect.overlaps(orb1Rect)) {
+				p2.damage(Orb.DAMAGE);
+				p1Orb.harmful = false;
+			}
+		}
+		if (p2Orb != null && p2Orb.harmful) {
+			Rectangle orb2Rect = p2Orb.getBoundingRectangle();
+			if (p1Rect.overlaps(orb2Rect)) {
+				p1.damage(Orb.DAMAGE);
+				p2Orb.harmful = false;
+			}
+		}
+		if (p1Rect.overlaps(p2Rect)) {
+			p1.damage(Orb.DAMAGE);
+			p2.damage(Orb.DAMAGE);
+			// rebound
+		}
+	}
+
+}

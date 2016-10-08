@@ -36,4 +36,8 @@ public class Puck extends Hero {
       currentOrbCooldown -= 1;
     }
   }
+  
+  public Orb getOrb() {
+	  return orb;
+  }
 }

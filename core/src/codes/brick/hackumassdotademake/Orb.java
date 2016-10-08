@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class Orb extends Sprite{
+  public static final int DAMAGE = 40;
+  public boolean harmful = true;
   private Puck puck;
   private boolean facingRight = true;
   private int velocity = 20;

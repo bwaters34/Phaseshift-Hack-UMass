@@ -26,7 +26,7 @@ public abstract class Hero extends Sprite {
     health = maxHealth;
   }
 
-  private void damage(int damage) {
+  public void damage(int damage) {
     health -= damage;
     if (health < 0) {
       die();
