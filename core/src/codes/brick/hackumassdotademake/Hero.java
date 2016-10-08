@@ -8,14 +8,10 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 public abstract class Hero extends Sprite {
   private int maxHealth;
   private int health;
-  private int spellTimer1;
-  private int spellTimer2;
 
   private final int GROUND_Y_VALUE = 0;
   private final int JUMP_SPEED = 50;
   private final int JUMP_CHANGE = 1;
-  static final int VERTEX_SIZE = 2 + 1 + 2;
-  static final int SPRITE_SIZE = 4 * VERTEX_SIZE;
   private int currentJumpSpeed = JUMP_SPEED;
 
   private enum State {
