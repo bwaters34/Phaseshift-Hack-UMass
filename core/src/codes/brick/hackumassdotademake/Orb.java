@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class Orb extends Sprite{
   public static final int DAMAGE = 40;
+  public static final int SIZE = Hero.SIZE/2;
   public boolean harmful = true;
   private Puck puck;
   private int velocity = 20;
@@ -12,10 +13,11 @@ public class Orb extends Sprite{
   public Orb(Puck puck, String textureName){
     super(new Texture(textureName));
     this.puck = puck;
-    this.setPosition(puck.getX(), puck.getY());
+    this.setPosition(puck.getX(), puck.getY() + puck.getHeight() / 2);
     if(puck.isFlipX()){
       velocity *= - 1;
     }
+    this.setSize(SIZE, SIZE);
     //TODO: get facing direction from Puck
     //currently bullets only move to the right
   }
