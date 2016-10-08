@@ -56,9 +56,11 @@ public abstract class Hero extends Sprite {
     switch (direction) {
     case LEFT:
       this.setPosition(getX() - 10, getY());
+      this.setFlip(true, false);
       break;
     case RIGHT:
       this.setPosition(getX() + 10, getY());
+      this.setFlip(false, false);
       break;
     case UP:
       this.setPosition(getX(), getY() + 10);;
