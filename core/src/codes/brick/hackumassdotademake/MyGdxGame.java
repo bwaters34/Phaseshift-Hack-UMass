@@ -8,9 +8,10 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class MyGdxGame extends ApplicationAdapter {
-	SpriteBatch batch;
-	Hero player1;
-	Hero player2;
+  private SpriteBatch batch;
+  private Puck player1;
+  private Puck player2;
+  private CollisionDetector collisions;
 
   public static final int VIEWPORT_WIDTH = 1024;
   public static final int VIEWPORT_HEIGHT = 256;
@@ -27,10 +28,11 @@ public class MyGdxGame extends ApplicationAdapter {
 		player1 = new Puck();
 		player1.setPosition(0, 0);
 		player2 = new Puck();
-		player2.setPosition(300, 0);
 		player2.flip(true, false);
+		player2.setPosition(VIEWPORT_WIDTH - player2.getWidth(), 0);
 		iw = new InputWatcher(player1, player2);
 		Gdx.input.setInputProcessor(iw);
+		collisions = new CollisionDetector(player1, player2);
 	}
 
 	@Override
@@ -40,9 +42,12 @@ public class MyGdxGame extends ApplicationAdapter {
 		// draw bg
 		player1.draw(batch);
 		player2.draw(batch);
+    player1.drawOrb(batch);
+    player2.drawOrb(batch);
 		batch.end();
 		player1.update();
 		player2.update();
+		collisions.detectCollisions();
 	}
 
   @Override

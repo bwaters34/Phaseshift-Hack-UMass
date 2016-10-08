@@ -3,6 +3,7 @@ package codes.brick.hackumassdotademake;
 import com.badlogic.gdx.graphics.g2d.Batch;
 
 public class Puck extends Hero {
+  public static final int COLLISION_REBOUND = 50;
   private Orb orb;
   private int currentOrbCooldown= 0; //is it on cooldown?  Starts not on cooldowjn
   private int maxOrbCooldown = 180; //3 second cooldown
@@ -21,9 +22,12 @@ public class Puck extends Hero {
   @Override
   public void draw (Batch batch) {
     super.draw(batch);
+  }
+  
+  public void drawOrb (Batch batch) {
     if(orb!= null){
       orb.draw(batch);
-    }
+    }    
   }
 
   @Override
@@ -35,5 +39,9 @@ public class Puck extends Hero {
     if(currentOrbCooldown > 0){
       currentOrbCooldown -= 1;
     }
+  }
+  
+  public Orb getOrb() {
+	  return orb;
   }
 }

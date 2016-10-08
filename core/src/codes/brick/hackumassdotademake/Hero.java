@@ -1,6 +1,7 @@
 package codes.brick.hackumassdotademake;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -19,20 +20,26 @@ public abstract class Hero extends Sprite {
   }
   private State currentJumpState = State.STANDING;
 
+  public static final int SIZE = 64;
 
   private Direction direction;
+
+  public Direction getDirection() {
+    return direction;
+  }
 
   public Hero(int maxHealth, String textureName) {
     super(new Texture(textureName));
     this.maxHealth = maxHealth;
     restoreHealth();
+    this.setSize(SIZE, SIZE);
   }
 
   public void restoreHealth() {
     health = maxHealth;
   }
 
-  private void damage(int damage) {
+  public void damage(int damage) {
     health -= damage;
     if (health < 0) {
       die();
@@ -118,8 +125,9 @@ public abstract class Hero extends Sprite {
     System.out.println(direction);
     move();
     jump();
-    direction = null;
-
   }
 
+  public void stopMotion() {
+    direction = null;
+  }
 }
