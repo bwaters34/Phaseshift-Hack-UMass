@@ -25,9 +25,10 @@ public class MyGdxGame extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		viewport = new FitViewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
 		player1 = new Puck();
-		player1.setPosition(100, 100);
+		player1.setPosition(0, 0);
 		player2 = new Puck();
-		player2.setPosition(0, 0);
+		player2.setPosition(300, 100);
+		player2.flip(true, false);
 		iw = new InputWatcher(player1, player2);
 		Gdx.input.setInputProcessor(iw);
 	}

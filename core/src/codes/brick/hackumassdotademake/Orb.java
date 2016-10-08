@@ -5,13 +5,15 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class Orb extends Sprite{
   private Puck puck;
-  private boolean facingRight = true;
   private int velocity = 20;
 
   public Orb(Puck puck, String textureName){
     super(new Texture(textureName));
     this.puck = puck;
     this.setPosition(puck.getX(), puck.getY());
+    if(puck.isFlipX()){
+      velocity *= - 1;
+    }
     //TODO: get facing direction from Puck
     //currently bullets only move to the right
   }
