@@ -32,7 +32,14 @@ public class CollisionDetector {
 		if (p1Rect.overlaps(p2Rect)) {
 			p1.damage(Orb.DAMAGE);
 			p2.damage(Orb.DAMAGE);
-			// rebound
+			if (p1.getX() < p2.getX()) {
+				p1.setPosition(p1.getX() - Puck.COLLISION_REBOUND, p1.getY());
+				p2.setPosition(p2.getX() + Puck.COLLISION_REBOUND, p2.getY());
+			}
+			else {
+				p1.setPosition(p1.getX() + Puck.COLLISION_REBOUND, p1.getY());
+				p2.setPosition(p2.getX() - Puck.COLLISION_REBOUND, p2.getY());
+			}
 		}
 	}
 
