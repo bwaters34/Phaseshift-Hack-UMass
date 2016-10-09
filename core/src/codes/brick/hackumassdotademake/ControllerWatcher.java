@@ -15,6 +15,10 @@ public class ControllerWatcher extends ControllerAdapter {
 
   @Override
   public boolean buttonDown(Controller controller, int buttonCode) {
+    if (buttonCode == 7 && MyGdxGame.isGameFinished) {
+      MyGdxGame.enterPressed = true;
+      return true;
+    }
     // TODO: configurable controls
     if (controller == player1.controller) {
       if (buttonCode == 0) {
