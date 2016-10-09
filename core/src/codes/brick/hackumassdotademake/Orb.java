@@ -7,12 +7,10 @@ public class Orb extends Sprite{
   public static final int DAMAGE = 40;
   public static final int SIZE = Hero.SIZE/2;
   public boolean harmful = true;
-  private Puck puck;
   private int velocity = 20;
 
   public Orb(Puck puck, String textureName){
     super(new Texture(textureName));
-    this.puck = puck;
     this.setPosition(puck.getX(), puck.getY() + puck.getHeight() / 2);
     if(puck.isFlipX()){
       velocity *= - 1;

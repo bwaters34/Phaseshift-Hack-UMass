@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class CollisionDetector {
 	private Puck p1, p2;
+	public static final int COLLISION_DAMAGE = 5;
 
 	public CollisionDetector(Puck player1, Puck player2) {
 		p1 = player1;
@@ -40,6 +41,8 @@ public class CollisionDetector {
 				p1.setPosition(p1.getX() + Puck.COLLISION_REBOUND, p1.getY());
 				p2.setPosition(p2.getX() - Puck.COLLISION_REBOUND, p2.getY());
 			}
+      p1.damage(COLLISION_DAMAGE);
+      p2.damage(COLLISION_DAMAGE);
 		}
 		validatePosition(p1);
 		validatePosition(p2);

@@ -24,6 +24,8 @@ public class InputWatcher extends InputAdapter {
       player1.rightSignal();
     } else if (keycode == Keys.R){
       player1.useFirstSpell();
+    } else if (keycode == Keys.F){
+      player1.useSecondSpell();
     }
     //BEGIN PLAYER 2
      else if (keycode == Keys.UP) {
@@ -34,6 +36,8 @@ public class InputWatcher extends InputAdapter {
       player2.rightSignal();
     } else if (keycode == Keys.SPACE) {
       player2.useFirstSpell();
+    } else if (keycode == Keys.M) {
+      player2.useSecondSpell();
     }
     return true;
   }

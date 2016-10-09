@@ -1,9 +1,6 @@
 package codes.brick.hackumassdotademake;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public abstract class Hero extends Sprite {
@@ -11,8 +8,8 @@ public abstract class Hero extends Sprite {
   private int health;
 
   private final int GROUND_Y_VALUE = 0;
-  private final int JUMP_SPEED = 50;
-  private final int JUMP_CHANGE = 1;
+  private final int JUMP_SPEED = 30;
+  private final int JUMP_CHANGE = 2;
   private int currentJumpSpeed = JUMP_SPEED;
 
   private enum State {
@@ -106,8 +103,9 @@ public abstract class Hero extends Sprite {
       this.setY(this.getY()-currentJumpSpeed);
       //      IncreaseByValue(Speed, Value); //Increase the speed, so the character falls gradually faster.
       currentJumpSpeed += JUMP_CHANGE;
-      if (this.getY() == GROUND_Y_VALUE)
+      if (this.getY() <= GROUND_Y_VALUE)
       {
+        this.setY(GROUND_Y_VALUE);
         //If we reached the original Y coordinate, we hit the ground. Mark the character as standing.
         //           ChangeState(Standing);
         currentJumpState = State.STANDING;
@@ -120,6 +118,7 @@ public abstract class Hero extends Sprite {
   }
 
   public abstract void useFirstSpell();
+  public abstract void useSecondSpell();
 
   public void update() {
     System.out.println(direction);
