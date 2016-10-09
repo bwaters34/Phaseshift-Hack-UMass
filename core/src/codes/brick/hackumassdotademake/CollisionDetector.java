@@ -31,8 +31,6 @@ public class CollisionDetector {
 			}
 		}
 		if (p1Rect.overlaps(p2Rect)) {
-			p1.damage(Orb.DAMAGE);
-			p2.damage(Orb.DAMAGE);
 			if (p1.getX() < p2.getX()) {
 				p1.setPosition(p1.getX() - Puck.COLLISION_REBOUND, p1.getY());
 				p2.setPosition(p2.getX() + Puck.COLLISION_REBOUND, p2.getY());
@@ -41,24 +39,24 @@ public class CollisionDetector {
 				p1.setPosition(p1.getX() + Puck.COLLISION_REBOUND, p1.getY());
 				p2.setPosition(p2.getX() - Puck.COLLISION_REBOUND, p2.getY());
 			}
-      p1.damage(COLLISION_DAMAGE);
-      p2.damage(COLLISION_DAMAGE);
+			p1.damage(COLLISION_DAMAGE);
+			p2.damage(COLLISION_DAMAGE);
 		}
 		validatePosition(p1);
 		validatePosition(p2);
 	}
 
 	public void validatePosition(Puck player) {
-	  if (player.getX() < 0) {
-	    player.setX(0);
-	  }
-	  else if (player.getX() > MyGdxGame.VIEWPORT_WIDTH - player.getWidth()) {
-	    player.setX(MyGdxGame.VIEWPORT_WIDTH - player.getWidth());
-	  }
+		if (player.getX() < 0) {
+			player.setX(0);
+		}
+		else if (player.getX() > MyGdxGame.VIEWPORT_WIDTH - player.getWidth()) {
+			player.setX(MyGdxGame.VIEWPORT_WIDTH - player.getWidth());
+		}
 
-	  if(player.getOrb() != null && (player.getOrb().getX() < 0 || player.getOrb().getX() >  MyGdxGame.VIEWPORT_WIDTH - player.getOrb().getWidth())){
-	    player.deleteOrb();
-	  }
+		if(player.getOrb() != null && (player.getOrb().getX() < 0 || player.getOrb().getX() >  MyGdxGame.VIEWPORT_WIDTH - player.getOrb().getWidth())){
+			player.deleteOrb();
+		}
 	}
 
 

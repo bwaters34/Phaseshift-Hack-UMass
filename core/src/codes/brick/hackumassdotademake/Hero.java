@@ -31,6 +31,10 @@ public abstract class Hero extends Sprite {
 
 
 
+  public int getHealth() {
+    return health;
+  }
+
   protected enum State {
     STANDING, JUMPING, FALLING
   }
