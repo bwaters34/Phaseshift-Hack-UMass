@@ -38,10 +38,13 @@ public class InputWatcher extends InputAdapter {
       player2.useFirstSpell();
     } else if (keycode == Keys.M) {
       player2.useSecondSpell();
+    } else if (keycode == Keys.ENTER && MyGdxGame.isGameFinished){
+      MyGdxGame.enterPressed = true;
     }
+
     return true;
   }
-  
+
   @Override
   public boolean keyUp(int keycode) {
     // TODO: configurable controls
