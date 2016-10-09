@@ -12,20 +12,29 @@ public class Puck extends Hero {
   private int phaseShiftDuration = 0;
   private int maxPhaseShiftDuration = 60;
   private float previousY = 0;
-  
   public Puck(String textureName) {
       super(100, textureName);
   }
 
   @Override
   public void useFirstSpell(){
-    if(currentOrbCooldown > 0 || phaseShiftDuration > 0){
+    if(currentOrbCooldown > 0 && orb!= null){
+      System.out.println("Teleport position = " + orb.getX() + ",\t" + "our height: " + this.getHeight() + " - " + orb.getY());
+      this.setPosition(orb.getX(), orb.getY()-orb.getHeight()); //teleport to orb location
+      if(this.getY() > GROUND_Y_VALUE){
+        currentJumpState = State.FALLING;
+        currentJumpSpeed = 0;
+      }
+      deleteOrb();
+      return;
+    }
+    if (phaseShiftDuration > 0){
       return;
     }
     orb = new Orb(this, "orb.png");
     currentOrbCooldown = maxOrbCooldown;
   }
-  
+
   @Override
   public void useSecondSpell(){
     if(currentPhaseShiftCooldown > 0){
@@ -46,6 +55,10 @@ public class Puck extends Hero {
     if(orb!= null){
       orb.draw(batch);
     }
+  }
+
+  public void deleteOrb() {
+    orb = null;
   }
 
   @Override
@@ -72,5 +85,11 @@ public class Puck extends Hero {
 
   public Orb getOrb() {
 	  return orb;
+  }
+
+  public void reset(){
+    orb = null;
+    currentPhaseShiftCooldown = 0;
+    currentOrbCooldown = 0;
   }
 }

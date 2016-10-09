@@ -74,12 +74,30 @@ public class MyGdxGame extends ApplicationAdapter {
       player2.restoreHealth();
       player1.setPosition(player1XPosition, player1YPosition);
       player2.setPosition(player2XPosition, player2YPosition);
+      player1.reset();
+      player2.reset();
     } else if(player2.isDead()){
       player2.increaseCurrentLives(-1);
       player1.restoreHealth();
       player2.restoreHealth();
       player1.setPosition(player1XPosition, player1YPosition);
       player2.setPosition(player2XPosition, player2YPosition);
+      player1.reset();
+      player2.reset();
+    }
+    if(!player1.hasLivesLeft() || !player2.hasLivesLeft()){
+      System.out.println("Player 1: had " + player1.getLives());
+      System.out.println("Player 2: had " + player2.getLives());
+      String winner = "";
+      if(player1.getLives() > player2.getLives()){
+        winner = "Player 1";
+      } else if(player1.getLives() < player2.getLives()){
+        winner = "Player 2";
+      } else{
+        winner = "Neither??";
+      }
+      System.out.println("The winner was: " + winner);
+      System.exit(0);
     }
   }
 
