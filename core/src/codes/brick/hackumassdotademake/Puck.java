@@ -27,7 +27,7 @@ public class Puck extends Hero {
           currentJumpState = State.FALLING;
           currentJumpSpeed = 0;
         }
-
+        teleportSound.play();
         deleteOrb();
       }
       return;
@@ -49,6 +49,7 @@ public class Puck extends Hero {
     currentPhaseShiftCooldown = maxPhaseShiftCooldown;
     previousY = this.getY();
     this.setPosition(this.getX(), 1000);
+    phaseShiftSound.play();
   }
 
   @Override

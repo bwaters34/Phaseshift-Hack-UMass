@@ -59,6 +59,7 @@ public abstract class Hero extends Sprite {
   public void damage(int damage) {
     health -= damage;
     hurtCooldown = 30;
+    hurtSound.play();
   }
 
   public void upSignal(){
@@ -66,6 +67,7 @@ public abstract class Hero extends Sprite {
       System.out.println("jumping");
       System.out.println(this.getY());
       currentJumpState = State.JUMPING;
+      jumpSound.play();
     }
   }
 
