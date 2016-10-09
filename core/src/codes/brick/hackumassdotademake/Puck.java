@@ -7,8 +7,8 @@ public class Puck extends Hero {
   private Orb orb;
   private int currentOrbCooldown= 0; //is it on cooldown?  Starts not on cooldowjn
   private int maxOrbCooldown = 180; //3 second cooldown
-  public Puck() {
-    super(100, "badlogic.jpg");
+  public Puck(String textureName) {
+      super(100, textureName);
   }
 
   @Override
@@ -23,11 +23,11 @@ public class Puck extends Hero {
   public void draw (Batch batch) {
     super.draw(batch);
   }
-  
+
   public void drawOrb (Batch batch) {
     if(orb!= null){
       orb.draw(batch);
-    }    
+    }
   }
 
   @Override
@@ -40,7 +40,7 @@ public class Puck extends Hero {
       currentOrbCooldown -= 1;
     }
   }
-  
+
   public Orb getOrb() {
 	  return orb;
   }
