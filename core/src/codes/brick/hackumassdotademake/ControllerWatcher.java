@@ -19,7 +19,7 @@ public class ControllerWatcher extends ControllerAdapter {
     if (controller == player1.controller) {
       if (buttonCode == 0) {
         player1.upSignal();
-      } else if (buttonCode == 4) {
+      } else if (buttonCode == 4 || buttonCode == 3) {
         player1.useFirstSpell();
       } else if (buttonCode == 2) {
         player1.useSecondSpell();
@@ -29,7 +29,7 @@ public class ControllerWatcher extends ControllerAdapter {
 
     if (buttonCode == 0) {
       player2.upSignal();
-    } else if (buttonCode == 4) {
+    } else if (buttonCode == 4 || buttonCode == 3) {
       player2.useFirstSpell();
     } else if (buttonCode == 2) {
       player2.useSecondSpell();

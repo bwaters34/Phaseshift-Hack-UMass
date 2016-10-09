@@ -27,7 +27,7 @@ public class Puck extends Hero {
           currentJumpState = State.FALLING;
           currentJumpSpeed = 0;
         }
-        teleportSound.play();
+        teleportSound.play(1f);
         deleteOrb();
       }
       return;
@@ -37,7 +37,7 @@ public class Puck extends Hero {
     }
     orb = new Orb(this, "orb.png");
     currentOrbCooldown = maxOrbCooldown;
-    shootSound.play();
+    shootSound.play(0.8f);
   }
 
   @Override

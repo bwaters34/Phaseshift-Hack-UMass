@@ -23,7 +23,7 @@ public abstract class Hero extends Sprite {
   protected final int MAX_HURT_COOLDOWN = 30;
 
   protected Sound shootSound = Gdx.audio.newSound(Gdx.files.internal("shoot.wav"));
-  protected Sound deathSound = Gdx.audio.newSound(Gdx.files.internal("death.wav"));
+  public static Sound deathSound = Gdx.audio.newSound(Gdx.files.internal("death.wav"));
   protected Sound phaseShiftSound = Gdx.audio.newSound(Gdx.files.internal("doodoodoodoo.wav"));
   protected Sound hurtSound = Gdx.audio.newSound(Gdx.files.internal("hurt.wav"));
   protected Sound jumpSound = Gdx.audio.newSound(Gdx.files.internal("jump.wav"));
@@ -71,7 +71,7 @@ public abstract class Hero extends Sprite {
       System.out.println("jumping");
       System.out.println(this.getY());
       currentJumpState = State.JUMPING;
-      jumpSound.play();
+      jumpSound.play(0.8f);
     }
   }
 
@@ -160,8 +160,17 @@ public abstract class Hero extends Sprite {
       hurtCooldown--;
     }
     if(isHurt()){
-      this.setColor(Color.YELLOW);
-      this.setAlpha(1);
+//      this.setAlpha(0.1f);
+
+//      this.setColor(Color.BLACK);
+//      this.setColor(this.getColor().r, this.getColor().g, this.getColor().g, 0.5f);
+      if(hurtCooldown % 2 == 0){
+        this.setAlpha(0);
+        this.setColor(Color.BLACK);
+      }
+      else{
+        this.setColor(Color.WHITE);
+      }
     }
     else{
       this.setColor(Color.WHITE);
