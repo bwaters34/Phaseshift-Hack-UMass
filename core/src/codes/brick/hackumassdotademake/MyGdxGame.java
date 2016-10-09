@@ -38,7 +38,9 @@ public class MyGdxGame extends ApplicationAdapter {
   private Viewport viewport;
 
   private BitmapFont font;
+  private BitmapFont font2;
   private Music backgroundMusic;
+  private Music victoryMusic;
 
   private static final Color PUCK_BLUE = new Color(0,(120f/255f),(248f/255f), 1);
   private static final Color PUCK_RED = new Color(1,0,(122f/255f), 1);
@@ -52,9 +54,15 @@ public class MyGdxGame extends ApplicationAdapter {
 
   private int overlayTimer = 0;
 
+  public static boolean isGameFinished = false;
+  public static boolean enterPressed = false;
+
+  private boolean victoryMusicCurrentlyPlaying = false;
+
   @Override
   public void create () {
     backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("Bach_in_G.ogg"));
+    victoryMusic = Gdx.audio.newMusic(Gdx.files.internal("victoryfanfare.wav"));
     backgroundMusic.setLooping(true);
     backgroundMusic.setVolume(0.5f);
     backgroundMusic.play();
@@ -76,15 +84,23 @@ public class MyGdxGame extends ApplicationAdapter {
     collisions = new CollisionDetector(player1, player2);
     // FONT
     FreeTypeFontGenerator generator =
-            new FreeTypeFontGenerator(Gdx.files.internal("PXSansRegular.ttf"));
+        new FreeTypeFontGenerator(Gdx.files.internal("PXSansRegular.ttf"));
     FreeTypeFontParameter parameter = new FreeTypeFontParameter();
     parameter.borderColor = Color.BLACK;
     parameter.borderWidth = 1;
     parameter.size = 32;
     font = generator.generateFont(parameter);
-    generator.dispose();
     font.setColor(Color.WHITE);
     sr = new ShapeRenderer();
+
+    FreeTypeFontParameter parameter2 = new FreeTypeFontParameter();
+    parameter2.borderColor = Color.BLACK;
+    parameter2.borderWidth = 1;
+    parameter2.size = 16;
+    font2 = generator.generateFont(parameter);
+    font2.setColor(Color.YELLOW);
+    generator.dispose();
+
   }
 
   public void assignControllers() {
@@ -99,62 +115,102 @@ public class MyGdxGame extends ApplicationAdapter {
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     batch.begin();
     // draw bg
-    background.draw(batch);
-    font.setColor(PUCK_BLUE);
-    font.draw(batch, "HEALTH: " + player1.getHealth(), 60, VIEWPORT_HEIGHT - 10);
-    font.draw(batch, "LIVES: " + player1.getLives(), 60, VIEWPORT_HEIGHT - 10 - font.getLineHeight());
-    font.setColor(PUCK_RED);
-    font.draw(batch, "HEALTH: " + player2.getHealth(), VIEWPORT_WIDTH - 60 - 130, VIEWPORT_HEIGHT - 10);
-    font.draw(batch, "LIVES: " + player2.getLives(), VIEWPORT_WIDTH - 60 - 130, VIEWPORT_HEIGHT - 10 - font.getLineHeight());
-    player1.draw(batch);
-    player2.draw(batch);
-    player1.drawOrb(batch);
-    player2.drawOrb(batch);
-    if(overlayTimer > 0) {
-      batch.flush();
-      sr.begin(ShapeRenderer.ShapeType.Filled);
-      sr.setColor(overlayColor);
-      sr.rect(0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
-      sr.end();
-      overlayTimer--;
-    }
-    batch.end();
-    player1.update();
-    player2.update();
-    collisions.detectCollisions();
-    if (player1.isDead() || player2.isDead()) {
-      if (player1.isDead() && player2.isDead()) {
-        player1.increaseCurrentLives(-1);
-        player2.increaseCurrentLives(-1);
-        overlayColor = new Color(Color.YELLOW.r, Color.YELLOW.g, Color.YELLOW.b, 0.5f);
-      } else if (player1.isDead()) {
-        player1.increaseCurrentLives(-1);
-        overlayColor = PUCK_RED_T;
-      } else if (player2.isDead()) {
-        player2.increaseCurrentLives(-1);
-        overlayColor = PUCK_BLUE_T;
-      }
-      overlayTimer = 120;
-      player1.restoreHealth();
-      player2.restoreHealth();
+    if(isGameFinished && enterPressed){
       player1.setPosition(player1XPosition, player1YPosition);
       player2.setPosition(player2XPosition, player2YPosition);
       player1.reset();
       player2.reset();
-      Hero.deathSound.play();
+      player1.resetLives();
+      player2.resetLives();
+      victoryMusic.pause();
+      backgroundMusic.play();
+      batch.end();
+      isGameFinished = false;
+      enterPressed = false;
+      overlayTimer = 0;
+      victoryMusicCurrentlyPlaying = false;
+
+    }
+    else{
+
       if (!player1.hasLivesLeft() || !player2.hasLivesLeft()) {
         System.out.println("Player 1: had " + player1.getLives());
         System.out.println("Player 2: had " + player2.getLives());
         String winner;
-        if (player1.getLives() > player2.getLives()) {
-          winner = "Player 1";
-        } else if (player1.getLives() < player2.getLives()) {
-          winner = "Player 2";
-        } else {
-          winner = "Neither??";
+        //      batch.flush();
+        //      sr.begin(ShapeRenderer.ShapeType.Filled);
+        //      sr.setColor(Color.BLACK.r,Color.BLACK.g,Color.BLACK.b,0.5F);
+        //      sr.rect(0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
+        //      sr.end();
+        backgroundMusic.pause();
+        victoryMusic.setLooping(false);
+        victoryMusic.setVolume(1);
+        if(!victoryMusicCurrentlyPlaying){
+            victoryMusic.play();
+            victoryMusicCurrentlyPlaying = true;
         }
+        if (player1.getLives() > player2.getLives()) {
+          winner = "PLAYER 1";
+        } else if (player1.getLives() < player2.getLives()) {
+          winner = "PLAYER 2";
+        } else {
+          winner = "YOU TIED!";
+        }
+        font.setColor(Color.YELLOW);
+        font.draw(batch, "THE WINNER IS: " + winner, VIEWPORT_WIDTH/2 - 150, VIEWPORT_HEIGHT/2);
+        font2.draw(batch, "CREATED BY THE BRICK.CODES TEAM:", 0, 0+ 50);
+        font2.draw(batch, "MATT DIBELLO, RICHARD MCCORMACK, DAVID OSGOOD, AND BRENNAN WATERS", 0, 25);
+
         System.out.println("The winner was: " + winner);
-        Gdx.app.exit();
+        isGameFinished = true;
+        //      Gdx.app.exit();
+        batch.end();
+      }
+      else{
+        background.draw(batch);
+        font.setColor(PUCK_BLUE);
+        font.draw(batch, "HEALTH: " + player1.getHealth(), 60, VIEWPORT_HEIGHT - 10);
+        font.draw(batch, "LIVES: " + player1.getLives(), 60, VIEWPORT_HEIGHT - 10 - font.getLineHeight());
+        font.setColor(PUCK_RED);
+        font.draw(batch, "HEALTH: " + player2.getHealth(), VIEWPORT_WIDTH - 60 - 130, VIEWPORT_HEIGHT - 10);
+        font.draw(batch, "LIVES: " + player2.getLives(), VIEWPORT_WIDTH - 60 - 130, VIEWPORT_HEIGHT - 10 - font.getLineHeight());
+        player1.draw(batch);
+        player2.draw(batch);
+        player1.drawOrb(batch);
+        player2.drawOrb(batch);
+        if(overlayTimer > 0) {
+          batch.flush();
+          sr.begin(ShapeRenderer.ShapeType.Filled);
+          sr.setColor(overlayColor);
+          sr.rect(0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
+          sr.end();
+          overlayTimer--;
+        }
+        batch.end();
+        player1.update();
+        player2.update();
+        collisions.detectCollisions();
+        if (player1.isDead() || player2.isDead()) {
+          if (player1.isDead() && player2.isDead()) {
+            player1.increaseCurrentLives(-1);
+            player2.increaseCurrentLives(-1);
+            overlayColor = new Color(Color.YELLOW.r, Color.YELLOW.g, Color.YELLOW.b, 0.5f);
+          } else if (player1.isDead()) {
+            player1.increaseCurrentLives(-1);
+            overlayColor = PUCK_RED_T;
+          } else if (player2.isDead()) {
+            player2.increaseCurrentLives(-1);
+            overlayColor = PUCK_BLUE_T;
+          }
+          overlayTimer = 120;
+          player1.restoreHealth();
+          player2.restoreHealth();
+          player1.setPosition(player1XPosition, player1YPosition);
+          player2.setPosition(player2XPosition, player2YPosition);
+          player1.reset();
+          player2.reset();
+          Hero.deathSound.play();
+        }
       }
     }
   }
@@ -168,4 +224,9 @@ public class MyGdxGame extends ApplicationAdapter {
   public void dispose () {
     batch.dispose();
   }
+
+  boolean isGameFinished () {
+    return isGameFinished;
+  }
+
 }

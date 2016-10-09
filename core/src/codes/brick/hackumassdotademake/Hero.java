@@ -99,6 +99,10 @@ public abstract class Hero extends Sprite {
     return currentLives;
   }
 
+  public void resetLives(){
+    currentLives= MAX_LIVES;
+  }
+
 
   public void move() {
     if (direction == null) {
