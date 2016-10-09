@@ -1,6 +1,7 @@
 package codes.brick.hackumassdotademake;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 
 public class Puck extends Hero {
   public static final int COLLISION_REBOUND = 50;
@@ -13,19 +14,22 @@ public class Puck extends Hero {
   private int maxPhaseShiftDuration = 60;
   private float previousY = 0;
   public Puck(String textureName) {
-      super(100, textureName);
+    super(100, textureName);
   }
 
   @Override
   public void useFirstSpell(){
-    if(currentOrbCooldown > 0 && orb!= null){
-      System.out.println("Teleport position = " + orb.getX() + ",\t" + "our height: " + this.getHeight() + " - " + orb.getY());
-      this.setPosition(orb.getX(), orb.getY()-orb.getHeight()); //teleport to orb location
-      if(this.getY() > GROUND_Y_VALUE){
-        currentJumpState = State.FALLING;
-        currentJumpSpeed = 0;
+    if(currentOrbCooldown > 0){
+      if( orb!= null){
+        System.out.println("Teleport position = " + orb.getX() + ",\t" + "our height: " + this.getHeight() + " - " + orb.getY());
+        this.setPosition(orb.getX(), orb.getY()-orb.getHeight()); //teleport to orb location
+        if(this.getY() > GROUND_Y_VALUE){
+          currentJumpState = State.FALLING;
+          currentJumpSpeed = 0;
+        }
+
+        deleteOrb();
       }
-      deleteOrb();
       return;
     }
     if (phaseShiftDuration > 0){
@@ -33,6 +37,7 @@ public class Puck extends Hero {
     }
     orb = new Orb(this, "orb.png");
     currentOrbCooldown = maxOrbCooldown;
+    shootSound.play();
   }
 
   @Override
@@ -61,6 +66,7 @@ public class Puck extends Hero {
     orb = null;
   }
 
+
   @Override
   public void update() {
     if (this.getY() == 1000 && phaseShiftDuration == 0){
@@ -79,12 +85,13 @@ public class Puck extends Hero {
       currentPhaseShiftCooldown -= 1;
     }
     if(phaseShiftDuration > 0) {
-       phaseShiftDuration -= 1;
+      phaseShiftDuration -= 1;
     }
+
   }
 
   public Orb getOrb() {
-	  return orb;
+    return orb;
   }
 
   public void reset(){

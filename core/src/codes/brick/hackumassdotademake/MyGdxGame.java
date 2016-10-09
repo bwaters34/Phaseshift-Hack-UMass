@@ -6,6 +6,8 @@ import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
@@ -14,6 +16,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class MyGdxGame extends ApplicationAdapter {
   private SpriteBatch batch;
+  private Sprite background;
   private Puck player1;
   private Puck player2;
   private CollisionDetector collisions;
@@ -38,6 +41,7 @@ public class MyGdxGame extends ApplicationAdapter {
   public void create () {
     batch = new SpriteBatch();
     viewport = new FitViewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
+    background = new Sprite(new Texture("bgfinal.png"));
     player1 = new Puck("puck.png");
     player1.setPosition(player1XPosition, player1YPosition);
     player2 = new Puck("redpuck.png");
@@ -72,6 +76,7 @@ public class MyGdxGame extends ApplicationAdapter {
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     batch.begin();
     // draw bg
+    background.draw(batch);
     font.setColor(Color.BLUE);
     font.draw(batch, "HEALTH: " + player1.getHealth(), 0, VIEWPORT_HEIGHT - 10);
     font.draw(batch, "LIVES: " + player1.getLives(), 0, VIEWPORT_HEIGHT - 10 - font.getLineHeight());

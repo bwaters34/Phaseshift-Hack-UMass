@@ -1,6 +1,9 @@
 package codes.brick.hackumassdotademake;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.controllers.Controller;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
@@ -16,6 +19,17 @@ public abstract class Hero extends Sprite {
   private boolean isDead = false;
   private final int MAX_LIVES = 3;
   private int currentLives = MAX_LIVES;
+  protected int hurtCooldown = 0;
+  protected final int MAX_HURT_COOLDOWN = 30;
+
+  protected Sound shootSound = Gdx.audio.newSound(Gdx.files.internal("shoot.wav"));
+  protected Sound deathSound = Gdx.audio.newSound(Gdx.files.internal("death.wav"));
+  protected Sound phaseShiftSound = Gdx.audio.newSound(Gdx.files.internal("doodoodoodoo.wav"));
+  protected Sound hurtSound = Gdx.audio.newSound(Gdx.files.internal("hurt.wav"));
+  protected Sound jumpSound = Gdx.audio.newSound(Gdx.files.internal("jump.wav"));
+  protected Sound teleportSound = Gdx.audio.newSound(Gdx.files.internal("teleport.wav"));
+
+
 
   public int getHealth() {
     return health;
@@ -43,10 +57,12 @@ public abstract class Hero extends Sprite {
 
   public void restoreHealth() {
     health = maxHealth;
+    hurtCooldown = 0;
   }
 
   public void damage(int damage) {
     health -= damage;
+    hurtCooldown = 30;
   }
 
   public void upSignal(){
@@ -128,12 +144,26 @@ public abstract class Hero extends Sprite {
 
   }
 
+  public boolean isHurt(){
+    return hurtCooldown > 0;
+  }
+
   public abstract void useFirstSpell();
   public abstract void useSecondSpell();
 
   public void update() {
     move();
     jump();
+    if(hurtCooldown > 0){
+      hurtCooldown--;
+    }
+    if(isHurt()){
+      this.setColor(Color.YELLOW);
+      this.setAlpha(1);
+    }
+    else{
+      this.setColor(Color.WHITE);
+    }
   }
 
   public void stopMotion() {
