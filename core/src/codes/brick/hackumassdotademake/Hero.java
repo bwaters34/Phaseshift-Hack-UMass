@@ -23,7 +23,7 @@ public abstract class Hero extends Sprite {
   protected final int MAX_HURT_COOLDOWN = 30;
 
   protected Sound shootSound = Gdx.audio.newSound(Gdx.files.internal("shoot.wav"));
-  protected Sound deathSound = Gdx.audio.newSound(Gdx.files.internal("death.wav"));
+  public static Sound deathSound = Gdx.audio.newSound(Gdx.files.internal("death.wav"));
   protected Sound phaseShiftSound = Gdx.audio.newSound(Gdx.files.internal("doodoodoodoo.wav"));
   protected Sound hurtSound = Gdx.audio.newSound(Gdx.files.internal("hurt.wav"));
   protected Sound jumpSound = Gdx.audio.newSound(Gdx.files.internal("jump.wav"));

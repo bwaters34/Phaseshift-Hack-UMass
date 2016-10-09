@@ -105,6 +105,7 @@ public class MyGdxGame extends ApplicationAdapter {
       player2.setPosition(player2XPosition, player2YPosition);
       player1.reset();
       player2.reset();
+      Hero.deathSound.play();
       if (!player1.hasLivesLeft() || !player2.hasLivesLeft()) {
         System.out.println("Player 1: had " + player1.getLives());
         System.out.println("Player 2: had " + player2.getLives());
