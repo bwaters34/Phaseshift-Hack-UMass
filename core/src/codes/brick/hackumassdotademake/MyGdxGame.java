@@ -52,12 +52,14 @@ public class MyGdxGame extends ApplicationAdapter {
 
   private ShapeRenderer sr;
 
-  private int overlayTimer = 0;
+  private float overlayTimer = 0;
 
   public static boolean isGameFinished = false;
   public static boolean enterPressed = false;
 
   private boolean victoryMusicCurrentlyPlaying = false;
+
+  private static final float FADE_TIME = 120f;
 
   @Override
   public void create () {
@@ -159,7 +161,7 @@ public class MyGdxGame extends ApplicationAdapter {
         font.setColor(Color.YELLOW);
         font.draw(batch, "THE WINNER IS: " + winner, VIEWPORT_WIDTH/2 - 150, VIEWPORT_HEIGHT/2);
         font.draw(batch, "PRESS ENTER TO RESTART", VIEWPORT_WIDTH/2 - 155, VIEWPORT_HEIGHT/2 - font.getLineHeight());
-        font2.draw(batch, "CREATED BY THE BRICK.CODES TEAM:", 0, 0+ 50);
+        font2.draw(batch, "CREATED BY THE BRICK.CODES TEAM:", 0, 0 + 50);
         font2.draw(batch, "MATT DIBELLO, RICHARD MCCORMACK, DAVID OSGOOD, AND BRENNAN WATERS", 0, 25);
         System.out.println("The winner was: " + winner);
         isGameFinished = true;
@@ -181,6 +183,7 @@ public class MyGdxGame extends ApplicationAdapter {
         if(overlayTimer > 0) {
           batch.flush();
           sr.begin(ShapeRenderer.ShapeType.Filled);
+          overlayColor.a =  0.75f * (overlayTimer / FADE_TIME);
           sr.setColor(overlayColor);
           sr.rect(0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
           sr.end();
@@ -202,7 +205,7 @@ public class MyGdxGame extends ApplicationAdapter {
             player2.increaseCurrentLives(-1);
             overlayColor = PUCK_BLUE_T;
           }
-          overlayTimer = 120;
+          overlayTimer = FADE_TIME;
           player1.restoreHealth();
           player2.restoreHealth();
           player1.setPosition(player1XPosition, player1YPosition);
@@ -224,5 +227,5 @@ public class MyGdxGame extends ApplicationAdapter {
   public void dispose () {
     batch.dispose();
   }
-  
+
 }
