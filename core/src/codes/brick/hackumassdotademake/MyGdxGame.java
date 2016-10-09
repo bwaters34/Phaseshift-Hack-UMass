@@ -3,8 +3,12 @@ package codes.brick.hackumassdotademake;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.controllers.Controllers;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -28,6 +32,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
   private Viewport viewport;
 
+  private BitmapFont font;
 
   @Override
   public void create () {
@@ -45,9 +50,20 @@ public class MyGdxGame extends ApplicationAdapter {
     cw = new ControllerWatcher(player1, player2);
     Controllers.addListener(cw);
     collisions = new CollisionDetector(player1, player2);
+    // FONT
+    FreeTypeFontGenerator generator =
+            new FreeTypeFontGenerator(Gdx.files.internal("PXSansRegular.ttf"));
+    FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+    parameter.size = 32;
+    font = generator.generateFont(parameter);
+    generator.dispose();
+    font.setColor(Color.WHITE);
   }
 
   public void assignControllers() {
+    if (Controllers.getControllers().size == 0) {
+      return;
+    }
     player1.controller = Controllers.getControllers().get(0);
   }
 
@@ -56,6 +72,12 @@ public class MyGdxGame extends ApplicationAdapter {
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     batch.begin();
     // draw bg
+    font.setColor(Color.BLUE);
+    font.draw(batch, "HEALTH: " + player1.getHealth(), 0, VIEWPORT_HEIGHT - 10);
+    font.draw(batch, "LIVES: " + player1.getLives(), 0, VIEWPORT_HEIGHT - 10 - font.getLineHeight());
+    font.setColor(Color.PINK);
+    font.draw(batch, "HEALTH: " + player2.getHealth(), 1024 - 125, VIEWPORT_HEIGHT - 10);
+    font.draw(batch, "LIVES: " + player2.getLives(), 1024 - 125, VIEWPORT_HEIGHT - 10 - font.getLineHeight());
     player1.draw(batch);
     player2.draw(batch);
     player1.drawOrb(batch);
@@ -65,9 +87,11 @@ public class MyGdxGame extends ApplicationAdapter {
     player2.update();
     collisions.detectCollisions();
     //TODO RICHARD DO THIS
-    if(player1.isDead()){
-      player1.increaseCurrentLives(-1);
-      if(player2.isDead()){
+    if (player1.isDead() || player2.isDead()) {
+      if (player1.isDead()) {
+        player1.increaseCurrentLives(-1);
+      }
+      if (player2.isDead()) {
         player2.increaseCurrentLives(-1);
       }
       player1.restoreHealth();
@@ -76,28 +100,20 @@ public class MyGdxGame extends ApplicationAdapter {
       player2.setPosition(player2XPosition, player2YPosition);
       player1.reset();
       player2.reset();
-    } else if(player2.isDead()){
-      player2.increaseCurrentLives(-1);
-      player1.restoreHealth();
-      player2.restoreHealth();
-      player1.setPosition(player1XPosition, player1YPosition);
-      player2.setPosition(player2XPosition, player2YPosition);
-      player1.reset();
-      player2.reset();
-    }
-    if(!player1.hasLivesLeft() || !player2.hasLivesLeft()){
-      System.out.println("Player 1: had " + player1.getLives());
-      System.out.println("Player 2: had " + player2.getLives());
-      String winner = "";
-      if(player1.getLives() > player2.getLives()){
-        winner = "Player 1";
-      } else if(player1.getLives() < player2.getLives()){
-        winner = "Player 2";
-      } else{
-        winner = "Neither??";
+      if (!player1.hasLivesLeft() || !player2.hasLivesLeft()) {
+        System.out.println("Player 1: had " + player1.getLives());
+        System.out.println("Player 2: had " + player2.getLives());
+        String winner;
+        if (player1.getLives() > player2.getLives()) {
+          winner = "Player 1";
+        } else if (player1.getLives() < player2.getLives()) {
+          winner = "Player 2";
+        } else {
+          winner = "Neither??";
+        }
+        System.out.println("The winner was: " + winner);
+        System.exit(0);
       }
-      System.out.println("The winner was: " + winner);
-      System.exit(0);
     }
   }
 

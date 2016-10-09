@@ -17,6 +17,10 @@ public abstract class Hero extends Sprite {
   private final int MAX_LIVES = 3;
   private int currentLives = MAX_LIVES;
 
+  public int getHealth() {
+    return health;
+  }
+
   protected enum State {
     STANDING, JUMPING, FALLING
   }

@@ -1,9 +1,7 @@
 package codes.brick.hackumassdotademake;
 
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerAdapter;
-import com.badlogic.gdx.controllers.mappings.Xbox;
 
 public class ControllerWatcher extends ControllerAdapter {
   private Hero player1;
