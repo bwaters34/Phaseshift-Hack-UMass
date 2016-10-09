@@ -55,6 +55,7 @@ public class MyGdxGame extends ApplicationAdapter {
     player1.update();
     player2.update();
     collisions.detectCollisions();
+    //TODO RICHARD DO THIS
     if(player1.isDead()){
       player1.increaseCurrentLives(-1);
       if(player2.isDead()){
