@@ -2,6 +2,7 @@ package codes.brick.hackumassdotademake;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -36,12 +37,18 @@ public class MyGdxGame extends ApplicationAdapter {
   private Viewport viewport;
 
   private BitmapFont font;
+  private Music backgroundMusic;
 
   @Override
   public void create () {
+    backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("Bach_in_G.ogg"));
+    backgroundMusic.setLooping(true);
+    backgroundMusic.setVolume(0.5f);
+    backgroundMusic.play();
     batch = new SpriteBatch();
     viewport = new FitViewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
     background = new Sprite(new Texture("bgfinal.png"));
+
     player1 = new Puck("puck.png");
     player1.setPosition(player1XPosition, player1YPosition);
     player2 = new Puck("redpuck.png");

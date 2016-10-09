@@ -71,7 +71,7 @@ public abstract class Hero extends Sprite {
       System.out.println("jumping");
       System.out.println(this.getY());
       currentJumpState = State.JUMPING;
-      jumpSound.play();
+      jumpSound.play(0.8f);
     }
   }
 
