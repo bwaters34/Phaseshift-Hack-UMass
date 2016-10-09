@@ -13,8 +13,11 @@ public class Puck extends Hero {
   private int phaseShiftDuration = 0;
   private int maxPhaseShiftDuration = 60;
   private float previousY = 0;
+  private String textureName;
+
   public Puck(String textureName) {
-    super(100, textureName);
+    super(100, textureName + ".png");
+    this.textureName = textureName;
   }
 
   @Override
@@ -35,7 +38,7 @@ public class Puck extends Hero {
     if (phaseShiftDuration > 0){
       return;
     }
-    orb = new Orb(this, "orb.png");
+    orb = new Orb(this, textureName + "orb.png");
     currentOrbCooldown = maxOrbCooldown;
     shootSound.play(0.8f);
   }

@@ -49,9 +49,9 @@ public class MyGdxGame extends ApplicationAdapter {
     viewport = new FitViewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
     background = new Sprite(new Texture("bgfinal.png"));
 
-    player1 = new Puck("puck.png");
+    player1 = new Puck("puck");
     player1.setPosition(player1XPosition, player1YPosition);
-    player2 = new Puck("redpuck.png");
+    player2 = new Puck("redpuck");
     player2.flip(true, false);
     player2XPosition = VIEWPORT_WIDTH - player2.getWidth();
     player2.setPosition(player2XPosition, player2YPosition);
