@@ -96,8 +96,8 @@ public class MyGdxGame extends ApplicationAdapter {
     FreeTypeFontParameter parameter2 = new FreeTypeFontParameter();
     parameter2.borderColor = Color.BLACK;
     parameter2.borderWidth = 1;
-    parameter2.size = 16;
-    font2 = generator.generateFont(parameter);
+    parameter2.size = 24;
+    font2 = generator.generateFont(parameter2);
     font2.setColor(Color.YELLOW);
     generator.dispose();
 
@@ -158,9 +158,9 @@ public class MyGdxGame extends ApplicationAdapter {
         }
         font.setColor(Color.YELLOW);
         font.draw(batch, "THE WINNER IS: " + winner, VIEWPORT_WIDTH/2 - 150, VIEWPORT_HEIGHT/2);
+        font.draw(batch, "PRESS ENTER TO RESTART", VIEWPORT_WIDTH/2 - 155, VIEWPORT_HEIGHT/2 - font.getLineHeight());
         font2.draw(batch, "CREATED BY THE BRICK.CODES TEAM:", 0, 0+ 50);
         font2.draw(batch, "MATT DIBELLO, RICHARD MCCORMACK, DAVID OSGOOD, AND BRENNAN WATERS", 0, 25);
-
         System.out.println("The winner was: " + winner);
         isGameFinished = true;
         //      Gdx.app.exit();
