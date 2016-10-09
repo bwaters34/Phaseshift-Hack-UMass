@@ -58,6 +58,8 @@ public class MyGdxGame extends ApplicationAdapter {
     FreeTypeFontGenerator generator =
             new FreeTypeFontGenerator(Gdx.files.internal("PXSansRegular.ttf"));
     FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+    parameter.borderColor = Color.BLACK;
+    parameter.borderWidth = 1;
     parameter.size = 32;
     font = generator.generateFont(parameter);
     generator.dispose();
@@ -77,12 +79,12 @@ public class MyGdxGame extends ApplicationAdapter {
     batch.begin();
     // draw bg
     background.draw(batch);
-    font.setColor(Color.BLUE);
-    font.draw(batch, "HEALTH: " + player1.getHealth(), 0, VIEWPORT_HEIGHT - 10);
-    font.draw(batch, "LIVES: " + player1.getLives(), 0, VIEWPORT_HEIGHT - 10 - font.getLineHeight());
-    font.setColor(Color.PINK);
-    font.draw(batch, "HEALTH: " + player2.getHealth(), 1024 - 125, VIEWPORT_HEIGHT - 10);
-    font.draw(batch, "LIVES: " + player2.getLives(), 1024 - 125, VIEWPORT_HEIGHT - 10 - font.getLineHeight());
+    font.setColor(new Color(0,(120f/255f),(248f/255f), 1));
+    font.draw(batch, "HEALTH: " + player1.getHealth(), 60, VIEWPORT_HEIGHT - 10);
+    font.draw(batch, "LIVES: " + player1.getLives(), 60, VIEWPORT_HEIGHT - 10 - font.getLineHeight());
+    font.setColor(new Color(1,0,(122f/255f), 1));
+    font.draw(batch, "HEALTH: " + player2.getHealth(), VIEWPORT_WIDTH - 60 - 130, VIEWPORT_HEIGHT - 10);
+    font.draw(batch, "LIVES: " + player2.getLives(), VIEWPORT_WIDTH - 60 - 130, VIEWPORT_HEIGHT - 10 - font.getLineHeight());
     player1.draw(batch);
     player2.draw(batch);
     player1.drawOrb(batch);
