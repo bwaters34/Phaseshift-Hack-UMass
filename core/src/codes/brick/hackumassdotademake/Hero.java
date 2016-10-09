@@ -1,9 +1,11 @@
 package codes.brick.hackumassdotademake;
 
+import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public abstract class Hero extends Sprite {
+  public Controller controller;
   private int maxHealth;
   private int health;
 
@@ -118,7 +120,6 @@ public abstract class Hero extends Sprite {
   public abstract void useSecondSpell();
 
   public void update() {
-    System.out.println(direction);
     move();
     jump();
   }

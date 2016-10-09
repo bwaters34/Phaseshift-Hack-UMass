@@ -2,6 +2,7 @@ package codes.brick.hackumassdotademake;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -23,6 +24,7 @@ public class MyGdxGame extends ApplicationAdapter {
   private float player2YPosition = 0;
 
   private InputWatcher iw;
+  private ControllerWatcher cw;
 
   private Viewport viewport;
 
@@ -39,7 +41,14 @@ public class MyGdxGame extends ApplicationAdapter {
     player2.setPosition(player2XPosition, player2YPosition);
     iw = new InputWatcher(player1, player2);
     Gdx.input.setInputProcessor(iw);
+    assignControllers();
+    cw = new ControllerWatcher(player1, player2);
+    Controllers.addListener(cw);
     collisions = new CollisionDetector(player1, player2);
+  }
+
+  public void assignControllers() {
+    player1.controller = Controllers.getControllers().get(0);
   }
 
   @Override
