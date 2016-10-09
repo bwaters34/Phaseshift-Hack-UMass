@@ -11,6 +11,9 @@ public abstract class Hero extends Sprite {
   private final int JUMP_SPEED = 30;
   private final int JUMP_CHANGE = 2;
   private int currentJumpSpeed = JUMP_SPEED;
+  private boolean isDead = false;
+  private final int MAX_LIVES = 3;
+  private int currentLives = MAX_LIVES;
 
   private enum State {
     STANDING, JUMPING, FALLING
@@ -38,9 +41,6 @@ public abstract class Hero extends Sprite {
 
   public void damage(int damage) {
     health -= damage;
-    if (health < 0) {
-      die();
-    }
   }
 
   public void upSignal(){
@@ -59,9 +59,14 @@ public abstract class Hero extends Sprite {
     direction = Direction.LEFT;
   }
 
-  private void die() {
-    // stub
+  public boolean isDead(){
+    return health <= 0;
   }
+
+  public void increaseCurrentLives(int add){
+    currentLives += add;
+  }
+
 
   public void move() {
     if (direction == null) {
@@ -75,7 +80,6 @@ public abstract class Hero extends Sprite {
     case RIGHT:
       this.setPosition(getX() + 10, getY());
       this.setFlip(false, false);
-      break;
     default:
       return;
     }
@@ -84,10 +88,7 @@ public abstract class Hero extends Sprite {
   public void jump() {
     if (currentJumpState == State.JUMPING)
     {
-      //We're ascending. Decrease the Y coordinate of the sprite by the speed.
-      //      DecreaseYCoordinateBy(Speed);
       this.setY(this.getY()+currentJumpSpeed);
-      //      DecreaseByValue(Speed, Value); //The character needs to jump smoothly, so the speed should decrease as he ascends.
       currentJumpSpeed -= JUMP_CHANGE;
       if (currentJumpSpeed <= 0)
       {
@@ -98,10 +99,7 @@ public abstract class Hero extends Sprite {
     }
     else if (currentJumpState == State.FALLING)
     {
-      //We're descending. Increase the Y coordinate by the speed (at first, it's 0).
-      //      IncreaseYCoordinateBy(Speed);
       this.setY(this.getY()-currentJumpSpeed);
-      //      IncreaseByValue(Speed, Value); //Increase the speed, so the character falls gradually faster.
       currentJumpSpeed += JUMP_CHANGE;
       if (this.getY() <= GROUND_Y_VALUE)
       {
@@ -110,7 +108,6 @@ public abstract class Hero extends Sprite {
         //           ChangeState(Standing);
         currentJumpState = State.STANDING;
         currentJumpSpeed = JUMP_SPEED;
-        //           CurrentYCoordinate = OriginalYCoordinate;
 
       }
     }

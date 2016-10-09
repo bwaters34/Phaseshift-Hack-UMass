@@ -13,8 +13,8 @@ public class Puck extends Hero {
   private int maxPhaseShiftDuration = 60;
   private float previousY = 0;
   
-  public Puck() {
-    super(100, "badlogic.jpg");
+  public Puck(String textureName) {
+      super(100, textureName);
   }
 
   @Override
@@ -41,11 +41,11 @@ public class Puck extends Hero {
   public void draw (Batch batch) {
     super.draw(batch);
   }
-  
+
   public void drawOrb (Batch batch) {
     if(orb!= null){
       orb.draw(batch);
-    }    
+    }
   }
 
   @Override
@@ -69,7 +69,7 @@ public class Puck extends Hero {
        phaseShiftDuration -= 1;
     }
   }
-  
+
   public Orb getOrb() {
 	  return orb;
   }
