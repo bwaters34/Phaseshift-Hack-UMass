@@ -67,6 +67,14 @@ public abstract class Hero extends Sprite {
     currentLives += add;
   }
 
+  public boolean hasLivesLeft(){
+    return currentLives > 0;
+  }
+
+  public int getLives(){
+    return currentLives;
+  }
+
 
   public void move() {
     if (direction == null) {

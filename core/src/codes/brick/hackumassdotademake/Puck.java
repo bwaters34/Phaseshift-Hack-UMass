@@ -12,7 +12,7 @@ public class Puck extends Hero {
   private int phaseShiftDuration = 0;
   private int maxPhaseShiftDuration = 60;
   private float previousY = 0;
-  
+
   public Puck(String textureName) {
       super(100, textureName);
   }
@@ -25,7 +25,7 @@ public class Puck extends Hero {
     orb = new Orb(this, "orb.png");
     currentOrbCooldown = maxOrbCooldown;
   }
-  
+
   @Override
   public void useSecondSpell(){
     if(currentPhaseShiftCooldown > 0){
@@ -72,5 +72,11 @@ public class Puck extends Hero {
 
   public Orb getOrb() {
 	  return orb;
+  }
+
+  public void reset(){
+    orb = null;
+    currentPhaseShiftCooldown = 0;
+    currentOrbCooldown = 0;
   }
 }
