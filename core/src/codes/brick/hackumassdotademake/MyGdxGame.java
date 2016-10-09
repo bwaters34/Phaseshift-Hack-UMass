@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -39,6 +40,18 @@ public class MyGdxGame extends ApplicationAdapter {
   private BitmapFont font;
   private Music backgroundMusic;
 
+  private static final Color PUCK_BLUE = new Color(0,(120f/255f),(248f/255f), 1);
+  private static final Color PUCK_RED = new Color(1,0,(122f/255f), 1);
+
+  private static final Color PUCK_BLUE_T = new Color(0,(120f/255f),(248f/255f), 0.5f);
+  private static final Color PUCK_RED_T = new Color(1,0,(122f/255f), 0.5f);
+
+  private Color overlayColor;
+
+  private ShapeRenderer sr;
+
+  private int overlayTimer = 0;
+
   @Override
   public void create () {
     backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("Bach_in_G.ogg"));
@@ -65,10 +78,13 @@ public class MyGdxGame extends ApplicationAdapter {
     FreeTypeFontGenerator generator =
             new FreeTypeFontGenerator(Gdx.files.internal("PXSansRegular.ttf"));
     FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+    parameter.borderColor = Color.BLACK;
+    parameter.borderWidth = 1;
     parameter.size = 32;
     font = generator.generateFont(parameter);
     generator.dispose();
     font.setColor(Color.WHITE);
+    sr = new ShapeRenderer();
   }
 
   public void assignControllers() {
@@ -84,28 +100,41 @@ public class MyGdxGame extends ApplicationAdapter {
     batch.begin();
     // draw bg
     background.draw(batch);
-    font.setColor(Color.BLUE);
-    font.draw(batch, "HEALTH: " + player1.getHealth(), 0, VIEWPORT_HEIGHT - 10);
-    font.draw(batch, "LIVES: " + player1.getLives(), 0, VIEWPORT_HEIGHT - 10 - font.getLineHeight());
-    font.setColor(Color.PINK);
-    font.draw(batch, "HEALTH: " + player2.getHealth(), 1024 - 125, VIEWPORT_HEIGHT - 10);
-    font.draw(batch, "LIVES: " + player2.getLives(), 1024 - 125, VIEWPORT_HEIGHT - 10 - font.getLineHeight());
+    font.setColor(PUCK_BLUE);
+    font.draw(batch, "HEALTH: " + player1.getHealth(), 60, VIEWPORT_HEIGHT - 10);
+    font.draw(batch, "LIVES: " + player1.getLives(), 60, VIEWPORT_HEIGHT - 10 - font.getLineHeight());
+    font.setColor(PUCK_RED);
+    font.draw(batch, "HEALTH: " + player2.getHealth(), VIEWPORT_WIDTH - 60 - 130, VIEWPORT_HEIGHT - 10);
+    font.draw(batch, "LIVES: " + player2.getLives(), VIEWPORT_WIDTH - 60 - 130, VIEWPORT_HEIGHT - 10 - font.getLineHeight());
     player1.draw(batch);
     player2.draw(batch);
     player1.drawOrb(batch);
     player2.drawOrb(batch);
+    if(overlayTimer > 0) {
+      batch.flush();
+      sr.begin(ShapeRenderer.ShapeType.Filled);
+      sr.setColor(overlayColor);
+      sr.rect(0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
+      sr.end();
+      overlayTimer--;
+    }
     batch.end();
     player1.update();
     player2.update();
     collisions.detectCollisions();
-    //TODO RICHARD DO THIS
     if (player1.isDead() || player2.isDead()) {
-      if (player1.isDead()) {
+      if (player1.isDead() && player2.isDead()) {
         player1.increaseCurrentLives(-1);
-      }
-      if (player2.isDead()) {
         player2.increaseCurrentLives(-1);
+        overlayColor = new Color(Color.YELLOW.r, Color.YELLOW.g, Color.YELLOW.b, 0.5f);
+      } else if (player1.isDead()) {
+        player1.increaseCurrentLives(-1);
+        overlayColor = PUCK_RED_T;
+      } else if (player2.isDead()) {
+        player2.increaseCurrentLives(-1);
+        overlayColor = PUCK_BLUE_T;
       }
+      overlayTimer = 120;
       player1.restoreHealth();
       player2.restoreHealth();
       player1.setPosition(player1XPosition, player1YPosition);
