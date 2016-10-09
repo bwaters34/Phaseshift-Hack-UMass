@@ -7,7 +7,7 @@ import codes.brick.hackumassdotademake.MyGdxGame;
 public class DesktopLauncher {
   public static void main (String[] arg) {
     Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
-    config.setTitle("Brawl");
+    config.setTitle("Phaseshift");
     config.setWindowedMode(1024, 256);
     new Lwjgl3Application(new MyGdxGame(), config);
   }
