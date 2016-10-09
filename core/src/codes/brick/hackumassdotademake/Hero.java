@@ -160,8 +160,17 @@ public abstract class Hero extends Sprite {
       hurtCooldown--;
     }
     if(isHurt()){
-      this.setColor(Color.YELLOW);
-      this.setAlpha(1);
+//      this.setAlpha(0.1f);
+
+//      this.setColor(Color.BLACK);
+//      this.setColor(this.getColor().r, this.getColor().g, this.getColor().g, 0.5f);
+      if(hurtCooldown % 2 == 0){
+        this.setAlpha(0);
+        this.setColor(Color.BLACK);
+      }
+      else{
+        this.setColor(Color.WHITE);
+      }
     }
     else{
       this.setColor(Color.WHITE);
