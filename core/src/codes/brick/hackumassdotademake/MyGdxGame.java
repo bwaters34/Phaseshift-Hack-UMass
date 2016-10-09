@@ -117,7 +117,7 @@ public class MyGdxGame extends ApplicationAdapter {
           winner = "Neither??";
         }
         System.out.println("The winner was: " + winner);
-        System.exit(0);
+        Gdx.app.exit();
       }
     }
   }
