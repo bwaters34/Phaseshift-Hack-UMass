@@ -1,6 +1,7 @@
 package codes.brick.hackumassdotademake;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 
 public class Puck extends Hero {
   public static final int COLLISION_REBOUND = 50;
@@ -36,6 +37,7 @@ public class Puck extends Hero {
     }
     orb = new Orb(this, "orb.png");
     currentOrbCooldown = maxOrbCooldown;
+    shootSound.play();
   }
 
   @Override
