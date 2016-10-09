@@ -187,6 +187,7 @@ public class Puck extends Hero {
     orb = null;
     currentPhaseShiftCooldown = 0;
     currentOrbCooldown = 0;
+    changeAnimation(idleAnimation);
   }
 
   @Override

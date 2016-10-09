@@ -156,7 +156,7 @@ public class MyGdxGame extends ApplicationAdapter {
         } else if (player1.getLives() < player2.getLives()) {
           winner = "PLAYER 2";
         } else {
-          winner = "YOU TIED!";
+          winner = "TIE!";
         }
         font.setColor(Color.YELLOW);
         font.draw(batch, "THE WINNER IS: " + winner, VIEWPORT_WIDTH/2 - 150, VIEWPORT_HEIGHT/2);
