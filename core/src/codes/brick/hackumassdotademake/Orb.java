@@ -11,10 +11,12 @@ public class Orb extends Sprite{
 
   public Orb(Puck puck, String textureName){
     super(new Texture(textureName));
-    this.setPosition(puck.getX(), puck.getY() + puck.getHeight() / 2);
+    int width = 0;
     if(puck.isFlipX()){
       velocity *= - 1;
+      width += puck.getWidth()/2;
     }
+    this.setPosition(puck.getX()+width, puck.getY() + puck.getHeight() / 2);
     this.setSize(SIZE, SIZE);
     //TODO: get facing direction from Puck
     //currently bullets only move to the right
