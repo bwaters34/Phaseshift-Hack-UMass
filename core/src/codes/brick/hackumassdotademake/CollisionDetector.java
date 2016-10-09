@@ -10,7 +10,7 @@ public class CollisionDetector {
 		p1 = player1;
 		p2 = player2;
 	}
-	
+
 	public void detectCollisions() {
 		Rectangle p1Rect = p1.getBoundingRectangle();
 		Rectangle p2Rect = p2.getBoundingRectangle();
@@ -47,7 +47,7 @@ public class CollisionDetector {
 		validatePosition(p1);
 		validatePosition(p2);
 	}
-	
+
 	public void validatePosition(Puck player) {
 	  if (player.getX() < 0) {
 	    player.setX(0);
@@ -55,6 +55,11 @@ public class CollisionDetector {
 	  else if (player.getX() > MyGdxGame.VIEWPORT_WIDTH - player.getWidth()) {
 	    player.setX(MyGdxGame.VIEWPORT_WIDTH - player.getWidth());
 	  }
+
+	  if(player.getOrb() != null && (player.getOrb().getX() < 0 || player.getOrb().getX() >  MyGdxGame.VIEWPORT_WIDTH - player.getOrb().getWidth())){
+	    player.deleteOrb();
+	  }
 	}
+
 
 }

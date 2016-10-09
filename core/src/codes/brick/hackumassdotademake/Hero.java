@@ -7,18 +7,18 @@ public abstract class Hero extends Sprite {
   private int maxHealth;
   private int health;
 
-  private final int GROUND_Y_VALUE = 0;
+  protected final int GROUND_Y_VALUE = 0;
   private final int JUMP_SPEED = 30;
   private final int JUMP_CHANGE = 2;
-  private int currentJumpSpeed = JUMP_SPEED;
+  protected int currentJumpSpeed = JUMP_SPEED;
   private boolean isDead = false;
   private final int MAX_LIVES = 3;
   private int currentLives = MAX_LIVES;
 
-  private enum State {
+  protected enum State {
     STANDING, JUMPING, FALLING
   }
-  private State currentJumpState = State.STANDING;
+  protected State currentJumpState = State.STANDING;
 
   public static final int SIZE = 64;
 
