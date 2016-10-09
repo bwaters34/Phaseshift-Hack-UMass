@@ -224,9 +224,5 @@ public class MyGdxGame extends ApplicationAdapter {
   public void dispose () {
     batch.dispose();
   }
-
-  boolean isGameFinished () {
-    return isGameFinished;
-  }
-
+  
 }
