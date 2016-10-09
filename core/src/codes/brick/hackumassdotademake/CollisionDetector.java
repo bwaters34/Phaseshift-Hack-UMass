@@ -34,13 +34,44 @@ public class CollisionDetector {
 			if (p1.getX() < p2.getX()) {
 				p1.setPosition(p1.getX() - Puck.COLLISION_REBOUND, p1.getY());
 				p2.setPosition(p2.getX() + Puck.COLLISION_REBOUND, p2.getY());
+				if (!p1.isFlipX() && p2.isFlipX()) {
+					// If p1 is facing right and p2 is facing left
+					p1.damage(COLLISION_DAMAGE);
+					p2.damage(COLLISION_DAMAGE);
+				} else if (p1.isFlipX() && p2.isFlipX()) {
+					// If p1 is facing left and p2 is facing left
+					p1.damage(COLLISION_DAMAGE);
+				} else if (p1.isFlipX() && !p2.isFlipX()) {
+					// If p1 is facing left and p2 is facing right
+					// no damage
+				} else if (!p1.isFlipX() && !p2.isFlipX()) {
+					// If p1 is facing right and p2 is facing right
+					p2.damage(COLLISION_DAMAGE);
+				}
+
 			}
-			else {
+			else if (p1.getX() > p2.getX()){
 				p1.setPosition(p1.getX() + Puck.COLLISION_REBOUND, p1.getY());
 				p2.setPosition(p2.getX() - Puck.COLLISION_REBOUND, p2.getY());
+				if (!p1.isFlipX() && p2.isFlipX()) {
+					// If p1 is facing right and p2 is facing left
+					// no damage
+				} else if (p1.isFlipX() && p2.isFlipX()) {
+					// If p1 is facing left and p2 is facing left
+					p2.damage(COLLISION_DAMAGE);
+				} else if (p1.isFlipX() && !p2.isFlipX()) {
+					// If p1 is facing left and p2 is facing right
+					p1.damage(COLLISION_DAMAGE);
+					p2.damage(COLLISION_DAMAGE);
+				} else if (!p1.isFlipX() && !p2.isFlipX()) {
+					// If p1 is facing right and p2 is facing right
+					p1.damage(COLLISION_DAMAGE);
+				}
+			} else {
+				p1.setPosition(p1.getX() + Puck.COLLISION_REBOUND, p1.getY());
+				p2.setPosition(p2.getX() - Puck.COLLISION_REBOUND, p2.getY());
+				// no damage if they are on top of each other exactly
 			}
-			p1.damage(COLLISION_DAMAGE);
-			p2.damage(COLLISION_DAMAGE);
 		}
 		validatePosition(p1);
 		validatePosition(p2);
