@@ -1,14 +1,14 @@
 package codes.brick.hackumassdotademake.desktop;
 
-import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import codes.brick.hackumassdotademake.MyGdxGame;
 
 public class DesktopLauncher {
-	public static void main (String[] arg) {
-		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.width = 1024;
-		config.height = 256;
-		new LwjglApplication(new MyGdxGame(), config);
-	}
+  public static void main (String[] arg) {
+    Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
+    config.setTitle("Brawl");
+    config.setWindowedMode(1024, 256);
+    new Lwjgl3Application(new MyGdxGame(), config);
+  }
 }
